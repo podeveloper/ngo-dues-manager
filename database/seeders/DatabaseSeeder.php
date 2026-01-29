@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'is_recurring' => true
             ],
             [
-                'name' => 'MAKUD T-Shirt',
+                'name' => 'NGO T-Shirt',
                 'slug' => 'merch_tshirt',
                 'amount' => 350.00,
                 'is_recurring' => false

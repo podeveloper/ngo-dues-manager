@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         // Admin User
         User::factory()->create([
             'name' => 'Yasin Korkmaz',
-            'email' => 'admin@makudder.org',
+            'email' => 'admin@example.com',
             'membership_type' => 'official',
             'has_radio' => true,
         ]);

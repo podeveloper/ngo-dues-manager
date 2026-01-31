@@ -26,4 +26,5 @@ Route::post('/login', function (Illuminate\Http\Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/invoices', [InvoiceController::class, 'index']);
     Route::post('/invoices/{id}/pay', [PaymentController::class, 'pay']);
+    Route::get('/test-cards', [App\Http\Controllers\Api\TestCardController::class, 'index']);
 });

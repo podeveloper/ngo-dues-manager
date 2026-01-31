@@ -16,18 +16,17 @@ class PaymentController extends Controller
         $this->paymentService = $paymentService;
     }
 
-    public function pay(Request $request, int $id)
+    public function pay(Request $request, $id)
     {
         $request->validate([
             'gateway' => 'nullable|in:stripe,iyzico'
         ]);
 
         try {
-            // Servisi çağır ve ödemeyi yap
             $payment = $this->paymentService->payInvoice(
                 $request->user(),
-                $id,
-                $request->input('gateway', 'stripe')
+                (int) $id,
+                $request->input('gateway')
             );
 
             return response()->json([

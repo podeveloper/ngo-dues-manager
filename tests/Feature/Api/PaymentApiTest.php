@@ -64,7 +64,9 @@ class PaymentApiTest extends TestCase
 
         Sanctum::actingAs($user2);
 
-        $response = $this->postJson("/api/invoices/{$invoice->id}/pay");
+        $response = $this->postJson("/api/invoices/{$invoice->id}/pay", [
+            'gateway' => 'stripe'
+        ]);
 
         $response->assertStatus(400);
     }

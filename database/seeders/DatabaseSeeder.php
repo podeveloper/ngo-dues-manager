@@ -54,5 +54,8 @@ class DatabaseSeeder extends Seeder
         User::factory(5)->create(['membership_type' => 'official', 'has_radio' => false]);
         User::factory(5)->create(['membership_type' => 'candidate', 'has_radio' => false]);
         User::factory(3)->create(['membership_type' => 'official', 'has_radio' => true]);
+
+        // Test Cards
+        $this->call(TestCardSeeder::class);
     }
 }

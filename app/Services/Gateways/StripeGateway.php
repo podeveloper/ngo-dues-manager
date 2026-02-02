@@ -10,10 +10,10 @@ use Stripe\Charge;
 
 class StripeGateway implements PaymentGatewayInterface
 {
-    public function charge(User $user, float $amount, string $currency): array
+    public function charge(User $user, float $amount, string $currency, ?string $cardNumber = null): array
     {
 
-        Stripe::setApiKey(env('STRIPE_SECRET'));
+        Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
 

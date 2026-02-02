@@ -10,10 +10,11 @@ use Exception;
 
 class IyzicoGateway implements PaymentGatewayInterface
 {
-    public function charge(User $user, float $amount, string $currency): array
+    public function charge(User $user, float $amount, string $currency, ?string $cardNumber = null): array
     {
-        $cardNumber = request()->input('card_number');
-        $cardNumber = preg_replace('/[^0-9]/', '', $cardNumber);
+        if ($cardNumber) {
+            $cardNumber = preg_replace('/[^0-9]/', '', $cardNumber);
+        }
 
         if (empty($cardNumber)) {
             $defaultCard = TestCard::where('should_succeed', true)->first();

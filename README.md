@@ -1,59 +1,168 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# NGO Dues Manager
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A practical billing and payment management system for Non-Governmental Organizations (NGOs) built with Laravel. It automates monthly membership dues generation and supports multi-gateway payment processing.
 
-## About Laravel
+**Built for Search and Rescue Organizations**: Addresses real-world needs of Search and Rescue teams with tiered membership billing, equipment fees, and flexible payment processing.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+> **🎯 Interview Project**: This project was created as a technical interview demonstration focusing on clear architecture, maintainability, and testing fundamentals.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+[![Tests](https://img.shields.io/badge/tests-65%20passed-success)](https://github.com/podeveloper/ngo-dues-manager)
+[![PHP](https://img.shields.io/badge/php-%5E8.2-blue)](https://php.net)
+[![Laravel](https://img.shields.io/badge/laravel-%5E12.0-red)](https://laravel.com)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Table of Contents
 
-## Learning Laravel
+- [About This Project](#about-this-project)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Testing](#testing)
+- [License](#license)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## 🎓 About This Project
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Real-World Use Case
 
-## Laravel Sponsors
+This project was developed to address a real-world need in **Search and Rescue (SAR) organizations**. These NGOs have specific billing requirements:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Different Membership Tiers**: Official members and candidate members pay different monthly dues
+- **Equipment Fees**: Radio usage fees are charged only to official members who have radio equipment assigned
+- **Automated Billing**: Monthly dues need to be automatically generated and tracked
 
-### Premium Partners
+The system was built as a proof-of-concept to explore how such requirements can be handled with modern web technologies.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Technical Demonstration
 
-## Contributing
+This project is used for interview discussions and focuses on:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Architecture**: A simple service-oriented structure
+- **Patterns**: Strategy and Factory usage where it fits
+- **Testing**: Unit and feature tests (65 tests, 161 assertions)
+- **Database**: Relational structure with Eloquent ORM
+- **Code Style**: Laravel conventions
+- **Documentation**: Short project notes
 
-## Code of Conduct
+### Development Approach
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+I focused on understanding the core flows. I am not a test expert; in previous roles I focused more on building. Many tests were AI-generated, but I can explain what each test is intended to verify. AI assistance was mainly used for:
 
-## Security Vulnerabilities
+- Test case suggestions
+- Documentation formatting
+- Code optimization recommendations
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ✨ Features
+- Monthly dues generation based on membership type
+- Stripe & Iyzico payments (pluggable gateways)
+- REST API with Sanctum auth
+- Invoices, items, and payment tracking
 
-## License
+## 🛠️ Tech Stack
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Backend
+- **Framework**: Laravel 12.x
+- **Language**: PHP 8.2+
+- **Database**: MySQL 8.0+
+- **ORM**: Eloquent
+- **Authentication**: Laravel Sanctum (token-based API auth)
+
+### Frontend
+- **Admin Panel**: Filament 3.2
+- **UI Framework**: Livewire
+- **Build Tool**: Vite
+- **CSS**: Tailwind CSS (via Filament)
+
+### Payment Gateways
+- **Stripe**: International payment processing
+- **Iyzico**: Turkish payment gateway integration
+
+### Testing
+- **Framework**: PHPUnit 11.x
+- **Coverage**: 65 tests, 159 assertions
+- **Types**: Unit, Integration, Feature tests
+
+### Development Tools
+- **Code Style**: Laravel Pint
+- **Containerization**: Docker (compose.yaml)
+- **Package Manager**: Composer, NPM
+
+## 📦 Installation
+
+### Prerequisites
+- PHP 8.2 or higher
+- Composer
+- MySQL 8.0 or higher
+- Node.js 18+ and NPM
+
+### Setup Steps
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/podeveloper/ngo-dues-manager.git
+cd ngo-dues-manager
+```
+
+2. **Install dependencies**
+```bash
+composer install
+npm install
+```
+
+3. **Environment configuration**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+4. **Configure database**
+Edit `.env` file:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ngo_dues_manager
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+5. **Configure payment gateways (optional)**
+
+If you want to try real gateway calls, set credentials in your `.env` file.
+
+6. **Run migrations and seeders**
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+7. **Build frontend assets**
+```bash
+npm run build
+```
+
+8. **Start development server**
+```bash
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`
+
+### Running with Docker
+
+```bash
+docker-compose up -d
+docker-compose exec app php artisan migrate
+docker-compose exec app php artisan db:seed
+```
+
+## 🧪 Testing
+
+Run tests:
+
+```bash
+php artisan test
+```
+
+## 📝 License
+
+This project is open-sourced software licensed under the [MIT license](LICENSE).

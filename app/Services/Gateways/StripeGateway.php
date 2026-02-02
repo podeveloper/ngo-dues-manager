@@ -17,8 +17,7 @@ class StripeGateway implements PaymentGatewayInterface
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-
-            $charge = Charge::create([
+            $chargePayload = $this->createCharge([
                 'amount' => $invoice->total_amount * 100,
                 'currency' => strtolower($invoice->currency),
                 'source' => 'tok_visa',
@@ -33,8 +32,8 @@ class StripeGateway implements PaymentGatewayInterface
 
             return [
                 'success' => true,
-                'transaction_id' => $charge->id,
-                'payload' => $charge->toArray()
+                'transaction_id' => $chargePayload['id'] ?? null,
+                'payload' => $chargePayload
             ];
         } catch (Exception $e) {
             return [
@@ -43,5 +42,12 @@ class StripeGateway implements PaymentGatewayInterface
                 'payload' => ['error' => $e->getMessage()]
             ];
         }
+    }
+
+    protected function createCharge(array $payload): array
+    {
+        $charge = Charge::create($payload);
+
+        return $charge->toArray();
     }
 }

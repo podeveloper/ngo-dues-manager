@@ -3,6 +3,7 @@
 namespace App\Services\Gateways;
 
 use App\Interfaces\PaymentGatewayInterface;
+use App\Models\Invoice;
 use App\Models\TestCard;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -10,7 +11,7 @@ use Exception;
 
 class IyzicoGateway implements PaymentGatewayInterface
 {
-    public function charge(User $user, float $amount, string $currency, ?string $cardNumber = null): array
+    public function charge(User $user, Invoice $invoice, ?string $cardNumber = null): array
     {
         if ($cardNumber) {
             $cardNumber = preg_replace('/[^0-9]/', '', $cardNumber);
@@ -37,6 +38,9 @@ class IyzicoGateway implements PaymentGatewayInterface
                     'bank' => $card->bank_name,
                     'card_family' => $card->scheme,
                     'card_type' => $card->type,
+                    'invoice_reference' => $invoice->reference_code,
+                    'amount' => $invoice->total_amount,
+                    'currency' => $invoice->currency,
                     'system_time' => now()->toDateTimeString()
                 ]
             ];

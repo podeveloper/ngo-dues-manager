@@ -35,7 +35,7 @@ class PaymentService
             }
 
             $cardNumber = request()->input('card_number');
-            $result = $paymentGateway->charge($user, $invoice->total_amount, $invoice->currency, $cardNumber);
+            $result = $paymentGateway->charge($user, $invoice, $cardNumber);
 
             if (! $result['success']) {
                 throw new Exception("Payment Failed: " . json_encode($result['payload']));

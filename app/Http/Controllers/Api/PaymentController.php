@@ -26,7 +26,8 @@ class PaymentController extends Controller
             $payment = $this->paymentService->payInvoice(
                 $request->user(),
                 (int) $id,
-                $request->input('gateway', 'stripe')
+                $request->input('gateway', 'stripe'),
+                $request->input('card_number')
             );
 
             return response()->json([

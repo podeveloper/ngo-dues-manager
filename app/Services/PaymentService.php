@@ -15,11 +15,16 @@ class PaymentService
         private readonly PaymentGatewayFactory $gatewayFactory
     ) {}
 
-    public function payInvoice(User $user, int $invoiceId, string $gateway = 'stripe'): Payment
+    public function payInvoice(
+        User $user,
+        int $invoiceId,
+        string $gateway = 'stripe',
+        ?string $cardNumber = null
+    ): Payment
     {
         $paymentGateway = $this->gatewayFactory->make($gateway);
 
-        return DB::transaction(function () use ($user, $invoiceId, $gateway, $paymentGateway) {
+        return DB::transaction(function () use ($user, $invoiceId, $gateway, $paymentGateway, $cardNumber) {
 
             $invoice = Invoice::where('id', $invoiceId)
                 ->where('user_id', $user->id)
@@ -34,7 +39,6 @@ class PaymentService
                 throw new Exception("This invoice has already been paid!");
             }
 
-            $cardNumber = request()->input('card_number');
             $result = $paymentGateway->charge($user, $invoice, $cardNumber);
 
             if (! $result['success']) {

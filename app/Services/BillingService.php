@@ -30,6 +30,15 @@ class BillingService
         return DB::transaction(function () use ($user) {
             $now = Carbon::now();
 
+            $existingInvoice = Invoice::where('user_id', $user->id)
+                ->whereYear('created_at', $now->year)
+                ->whereMonth('created_at', $now->month)
+                ->first();
+
+            if ($existingInvoice) {
+                return $existingInvoice;
+            }
+
             $invoice = Invoice::create([
                 'user_id' => $user->id,
                 'reference_code' => 'INV-' . $now->format('Ym') . '-' . Str::upper(Str::random(6)),

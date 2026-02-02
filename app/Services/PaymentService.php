@@ -6,16 +6,18 @@ use App\Interfaces\PaymentGatewayInterface;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\User;
-use App\Services\Gateways\IyzicoGateway;
-use App\Services\Gateways\StripeGateway;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
 class PaymentService
 {
+    public function __construct(
+        private readonly PaymentGatewayFactory $gatewayFactory
+    ) {}
+
     public function payInvoice(User $user, int $invoiceId, string $gateway = 'stripe'): Payment
     {
-        $paymentGateway = $this->getGateway($gateway);
+        $paymentGateway = $this->gatewayFactory->make($gateway);
 
         return DB::transaction(function () use ($user, $invoiceId, $gateway, $paymentGateway) {
 
@@ -31,7 +33,8 @@ class PaymentService
                 throw new Exception("This invoice has already been paid!");
             }
 
-            $result = $paymentGateway->charge($user, $invoice->total_amount, $invoice->currency);
+            $cardNumber = request()->input('card_number');
+            $result = $paymentGateway->charge($user, $invoice->total_amount, $invoice->currency, $cardNumber);
 
             if (! $result['success']) {
                 throw new Exception("Payment Failed: " . json_encode($result['payload']));
@@ -53,14 +56,5 @@ class PaymentService
                 'payload' => json_encode($result['payload']),
             ]);
         });
-    }
-
-    protected function getGateway(string $provider): PaymentGatewayInterface
-    {
-        return match ($provider) {
-            'iyzico' => new IyzicoGateway(),
-            'stripe' => new StripeGateway(),
-            default => throw new Exception("Unsupported payment provider: {$provider}")
-        };
     }
 }

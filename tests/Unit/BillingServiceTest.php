@@ -71,4 +71,71 @@ class BillingServiceTest extends TestCase
             'unit_price' => 50
         ]);
     }
+
+    public function test_it_generates_dues_for_all_users()
+    {
+        User::factory()->count(3)->create([
+            'membership_type' => 'official'
+        ]);
+
+        $count = $this->billingService->generateMonthlyDues();
+
+        $this->assertEquals(3, $count);
+        $this->assertDatabaseCount('invoices', 3);
+    }
+
+    public function test_it_does_not_generate_dues_for_deleted_users()
+    {
+        $user = User::factory()->create([
+            'membership_type' => 'official',
+            'deleted_at' => now()
+        ]);
+
+        $count = $this->billingService->generateMonthlyDues();
+
+        $this->assertEquals(0, $count);
+        $this->assertDatabaseCount('invoices', 0);
+    }
+
+    public function test_it_throws_exception_if_fee_type_is_missing()
+    {
+        FeeType::truncate();
+
+        $user = User::factory()->create(['membership_type' => 'official']);
+
+        $this->expectException(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+
+        $this->billingService->createInvoiceForUser($user);
+    }
+
+    public function test_it_does_not_create_duplicate_invoice_for_same_month()
+    {
+        $user = User::factory()->create([
+            'membership_type' => 'official',
+            'has_radio' => false
+        ]);
+
+        $firstInvoice = $this->billingService->createInvoiceForUser($user);
+        $secondInvoice = $this->billingService->createInvoiceForUser($user);
+        $this->assertEquals($firstInvoice->id, $secondInvoice->id);
+        $this->assertDatabaseCount('invoices', 1);
+    }
+
+    public function test_it_creates_new_invoice_for_different_month()
+    {
+        $user = User::factory()->create([
+            'membership_type' => 'official',
+            'has_radio' => false
+        ]);
+
+        $firstInvoice = $this->billingService->createInvoiceForUser($user);
+        $this->assertDatabaseCount('invoices', 1);
+
+        $this->travel(1)->month();
+        $secondInvoice = $this->billingService->createInvoiceForUser($user);
+
+        $this->assertNotEquals($firstInvoice->id, $secondInvoice->id);
+        $this->assertDatabaseCount('invoices', 2);
+        $this->assertNotEquals($firstInvoice->reference_code, $secondInvoice->reference_code);
+    }
 }

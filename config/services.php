@@ -35,4 +35,15 @@ return [
         ],
     ],
 
+    'stripe' => [
+        'secret' => env('STRIPE_SECRET'),
+        'public' => env('STRIPE_PUBLIC'),
+    ],
+
+    'iyzico' => [
+        'api_key' => env('IYZICO_API_KEY'),
+        'secret_key' => env('IYZICO_SECRET_KEY'),
+        'base_url' => env('IYZICO_BASE_URL', 'https://api.iyzipay.com'),
+    ],
+
 ];

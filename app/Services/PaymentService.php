@@ -23,6 +23,7 @@ class PaymentService
 
             $invoice = Invoice::where('id', $invoiceId)
                 ->where('user_id', $user->id)
+                ->lockForUpdate()
                 ->first();
 
             if (! $invoice) {

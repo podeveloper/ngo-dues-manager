@@ -23,7 +23,28 @@ class InvoiceResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('reference_code')
+                    ->default('INV-' . strtoupper(uniqid()))
+                    ->required(),
+                Forms\Components\TextInput::make('total_amount')
+                    ->numeric()
+                    ->required(),
+                Forms\Components\TextInput::make('currency')
+                    ->default('TRY')
+                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'Paid',
+                        'cancelled' => 'Cancelled',
+                    ])
+                    ->default('pending')
+                    ->required(),
+                Forms\Components\DatePicker::make('due_date')
+                    ->required(),
             ]);
     }
 

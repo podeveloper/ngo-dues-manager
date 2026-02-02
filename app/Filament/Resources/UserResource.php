@@ -27,6 +27,10 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('email')->email()->required(),
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->required(fn (string $context): bool => $context === 'create'),
                 Forms\Components\Select::make('membership_type')
                     ->options([
                         'official' => 'Official',

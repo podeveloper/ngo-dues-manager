@@ -601,6 +601,7 @@ export default {
                 confirmButtonText: "Yes, proceed",
             }).then(async (result) => {
                 if (result.isConfirmed) {
+                    const invoiceId = this.activeInvoiceId;
                     this.closeModal();
                     this.processingId = invoiceId;
 
